@@ -5,6 +5,10 @@ node-01
 node-02
 node-03
 
+[test]
+node-04
+node-05
+
 [rhel:children]
 dev
 prod

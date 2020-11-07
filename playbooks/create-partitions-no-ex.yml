@@ -1,0 +1,40 @@
+---
+- name:
+  hosts: all
+  tasks:
+    - name: get VG info
+      debug:
+        #msg: "{{ ansible_facts['lvm']['vgs']['vg2'] }}"
+        msg: "{{ ansible_facts['lvm']['vgs']['vg2']['free_g'] }}"
+      when: ( 'vg2' in ansible_facts['lvm']['vgs'] ) and  ( ansible_facts['lvm']['vgs']['vg2']['free_g'] >= '1.0' )
+
+    - name: Create LV with 1.5G size
+      lvol:
+        lv: data
+        vg: vg2
+        state: absent
+        force: yes
+
+    - name: Create partition 1.7G
+      parted:
+        device: /dev/sdb
+        number: 1
+        part_end: 1700MB
+        state: present
+        flags: [ lvm ]
+      when: inventory_hostname == 'node-01'
+    
+    - name: Create partition 1.10G
+      parted:
+        device: /dev/sdb
+        number: 1
+        part_end: 1100MB
+        state: present
+        flags: [ lvm ]
+      when: inventory_hostname == 'node-02'
+
+    - name: Create vg
+      lvg:
+        vg: vg2
+        pvs: /dev/sdb1
+      when: inventory_hostname == 'node-01' or inventory_hostname == 'node-02'

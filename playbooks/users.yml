@@ -1,0 +1,36 @@
+---
+- name: Create Users Depending on Group and Host
+  hosts: dev, test, prod
+  vars_files:
+    - ../vars/secrets.yml
+    - ../vars/user_list.yml
+  tasks:
+    - name: Create Groups
+      group:
+        name: developers
+        state: present
+      when: ( inventory_hostname in groups['dev'] ) or ( inventory_hostname in groups['test'] )
+
+    - name: Create Manager's Group
+      group:
+        name: managers
+        state: present
+      when: inventory_hostname in groups['prod']
+
+    - name: Create Developers
+      user:
+        name: "{{ item.name }}"
+        password: "{{ dev_password | password_hash('sha512') }}"
+        groups: "{{ item.groups }}"
+        append: yes
+      when: ( inventory_hostname in groups['dev'] or inventory_hostname in groups['test'] ) and ( item.groups == 'developers' )
+      loop: "{{ users }}"
+
+    - name: Create managers
+      user:
+        name: "{{ item.name }}"
+        password: "{{ dev_password | password_hash('sha512') }}"
+        groups: "{{ item.groups }}"
+        append: yes
+      when: inventory_hostname in groups['prod'] and item.groups == 'managers'
+      loop: "{{ users }}"

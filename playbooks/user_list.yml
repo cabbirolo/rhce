@@ -1,0 +1,7 @@
+users:
+  - name: devuser1
+    group: developers
+  - name: devuser2
+    group: developers
+  - name: mgruser1
+    group: managers

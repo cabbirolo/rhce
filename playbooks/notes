@@ -1,0 +1,9 @@
+1 - Users
+
+echo ansible >> vaultpass
+ansible-vault create secret.yml --vault-password-file=vaultpas
+chmod 600 vaultpas
+chown admin: vaultpass
+
+To run:
+ansible-playbook playbooks/users.yml -C --vault-password-file=vaultpass
