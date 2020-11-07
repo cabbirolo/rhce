@@ -1,0 +1,17 @@
+---
+- name: create logical vol
+  hosts: all
+  tasks:
+    - name: create lv in block
+      block:
+        - name: Create lv - space available
+          lvol:
+            lv: data
+            vg: vg2
+            size: 150M
+      
+        - name: Create lv  - no space available
+          lvol:
+            lv: data
+            vg: vg2
+            size: 120M

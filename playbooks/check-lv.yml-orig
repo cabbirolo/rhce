@@ -1,0 +1,25 @@
+---
+- name:
+  hosts: all
+  tasks:
+    - name: get lvm info
+      debug:
+        #msg: "{{ ansible_facts['lvm']['vgs'] }}"
+        #msg: "{{ ansible_facts['lvm']['vgs']['vg2'] }}"
+        msg: "{{ ansible_facts['lvm']['vgs']['vg2']['free_g'] }}"
+      ignore_errors: yes
+
+    - name: Prints message if doesnt find it
+      debug:
+        msg: vg2 doesnt exist
+      when: "'vg2' not in ansible_facts['lvm']['vgs']"
+
+    - name: Check vg size
+      debug:
+        msg: vg is 150M or larger
+      when: "ansible_facts['lvm']['vgs']['vg2']['free_g'] >= '0.14'"
+    
+    - name: Check vg size
+      debug:
+        msg: vg is smaller than 150M
+      when: "ansible_facts['lvm']['vgs']['vg2']['free_g'] < '0.14'"
