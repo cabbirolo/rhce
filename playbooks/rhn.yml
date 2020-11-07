@@ -1,0 +1,10 @@
+---
+- name: Register with RHN
+  hosts: dev, test
+  tasks:
+    - name: Register
+      redhat_subscription:
+        username: cabbirolo
+        password: SecreTouch2112!
+        auto_attach: yes
+        state: present
