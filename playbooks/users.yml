@@ -29,7 +29,7 @@
     - name: Create managers
       user:
         name: "{{ item.name }}"
-        password: "{{ dev_password | password_hash('sha512') }}"
+        password: "{{ mgr_password | password_hash('sha512') }}"
         groups: "{{ item.groups }}"
         append: yes
       when: inventory_hostname in groups['prod'] and item.groups == 'managers'
