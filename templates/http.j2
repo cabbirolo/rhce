@@ -1,0 +1,7 @@
+{% if inventory_hostname in groups['dev'] %}
+This is a DEV server
+{% elif inventory_hostname in groups['test'] %}
+This is a TEST server
+{% elif inventory_hostname in groups['prod'] %}
+This is a PROD server
+{% endif %}
