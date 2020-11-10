@@ -1,0 +1,26 @@
+---
+- name: Issue
+  hosts: all
+  tasks:
+    - name: Write /etc/issue
+      copy:
+        content: "This is a dev server \n"
+        dest: /etc/issue
+      when: inventory_hostname in groups['dev']
+
+    - name: Write /etc/issue
+      copy:
+        content: "This is a test server \n"
+        dest: /etc/issue
+      when: inventory_hostname in groups['test']
+
+    - name: Write /etc/issue
+      copy:
+        content: "This is a prod server\n"
+        dest: /etc/issue
+      when: inventory_hostname in groups['prod']
+
+    - name: Write /etc/issue2 using template
+      template:
+        src: ../templates/issue.j2
+        dest: /etc/issue_t

@@ -1,0 +1,10 @@
+---
+- name: Hardware Report
+  hosts: node-01
+  become: true
+  tasks:
+  
+    - name: Template
+      template:
+        src: ../templates/hw.j2
+        dest: /tmp/hwreport.txt

@@ -1,0 +1,8 @@
+---
+- name: motd
+  hosts: all
+  tasks:
+    - name: motd using template
+      template:
+        src: ../templates/motd.j2
+        dest: /etc/motd

@@ -1,0 +1,20 @@
+HOSTNAME: {{ ansible_facts['fqdn'] }}
+DISTRIBUTION: {{ ansible_facts['distribution'] }}
+RAM:{{ ansible_facts['memtotal_mb'] }}
+CPUS: {{ ansible_facts['processor_vcpus'] }}
+DISK1: {{ ansible_facts['devices']['sda']['size']|default("NONE",true) }}
+DISK2: {{ ansible_facts['devices']['sdb']['size']|default("NONE",true) }}
+DISK3: {{ ansible_facts['devices']['sdc']['size']|default("NONE",true) }}
+
+DISK LIST: {{ ansible_facts['devices'].keys() | select('match', '^sd') | list }}
+
+MOUNTS: 
+
+{% for mpt in ansible_facts['mounts'] %}
+{{ mpt.mount }}
+{% endfor %}
+
+
+{% for dev in ansible_facts['devices'].keys() | select('match', '^sd') | sort |list %}
+{{ dev }} {{ ansible_facts['devices'][dev]['size']|default("NONE",true) }}
+{% endfor %}

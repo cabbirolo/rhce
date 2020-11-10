@@ -1,0 +1,12 @@
+---
+- name: role1 load balancer
+  hosts: prod
+  vars:
+    haproxy_backend_httpchk: ''
+    haproxy_backend_servers:
+      - name: node-02
+        address: 192.168.4.202:80
+      - name: node-03
+        address: 192.168.4.203:80
+  roles:
+    - ./roles/geerlingguy.haproxy

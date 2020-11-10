@@ -1,0 +1,9 @@
+---
+- name: RHEL Role
+  hosts: dev
+  vars:
+    timesync_ntp_servers:
+      - hostname: server.example.com
+        iburst: yes
+  roles:
+    - rhel-system-roles.timesync

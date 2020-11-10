@@ -1,0 +1,23 @@
+---
+- name: Install/Update Packages
+  hosts: dev, prod
+  tasks:
+    - name: Install Packages
+      yum:
+        name: "{{ item }}"
+        state: present
+      when: inventory_hostname in groups['prod']
+      loop:
+        - telnet
+        - httpd
+
+    - name: Install Group Packages
+      yum:
+        name: '@Development Tools'
+        state: present
+      when: inventory_hostname in groups['dev']
+
+    - name: Update Packages
+      yum:
+        name: '*'
+        state: latest
