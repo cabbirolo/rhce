@@ -1,2 +1,2 @@
-rhn.yml
+playbooks/rhn.yml
 roles/geerlingguy.haproxy
