@@ -4,8 +4,8 @@
   tasks:
     - name: Register
       redhat_subscription:
-        username: cabbirolo 
-        password: SecreTouch2112!
+        username:
+        password:
         auto_attach: yes
         state: present
         force_register: yes
