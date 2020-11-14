@@ -1,0 +1,17 @@
+---
+- name: Hardware Report With Variables
+  hosts: node-01
+  vars_files:
+    - ../vars/report.vars
+  tasks:
+    - name: Copy template
+      get_url:
+        url: http://node-01/hw-template
+        dest: /tmp/hwreport2.txt
+
+    - name: Hardware Report
+      replace:
+        path: /tmp/hwreport.txt
+        regexp: "{{ item.src }}"
+        replace: "{{ item.dest }}"
+      loop: "{{ report }}"

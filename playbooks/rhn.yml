@@ -1,10 +1,11 @@
 ---
 - name: Register with RHN
-  hosts: dev, test
+  hosts: node-05
   tasks:
     - name: Register
       redhat_subscription:
-        username:
-        password: 
+        username: cabbirolo 
+        password: SecreTouch2112!
         auto_attach: yes
         state: present
+        force_register: yes
